@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-api
+  template:
+    metadata:
+      labels:
+        app: go-api
+    spec:
+      containers:
+      - name: go-api
+        image: <YOUR_DOCKERHUB_USERNAME>/go-api:latest
+        imagePullPolicy: Always
+        env:
+        - name: DB_HOST
+          value: db-service
+        - name: DB_USER
+          value: myuser
+        - name: DB_PASSWORD
+          value: mypassword
+        - name: DB_NAME
+          value: mydb
+        - name: DB_PORT
+          value: "5432"
+        ports:
+        - containerPort: 8080
