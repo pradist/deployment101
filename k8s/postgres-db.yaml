@@ -21,6 +21,9 @@ spec:
           value: mypassword
         - name: POSTGRES_DB
           value: mydb
+        volumeMounts:
+        - name: initdb
+          mountPath: /docker-entrypoint-initdb.d/
         ports:
         - containerPort: 5432
         resources:
@@ -30,6 +33,10 @@ spec:
           limits:
             memory: "512Mi"
             cpu: "500m"
+      volumes:
+      - name: initdb
+        configMap:
+          name: postgres-initdb
 ---
 apiVersion: v1
 kind: Service
